@@ -4,6 +4,7 @@ interface MatcherUtils {
 }
 
 export interface MatcherState {
+  equals: (actual: string, expected: unknown) => boolean;
   utils: MatcherUtils;
   isNot?: boolean;
 }

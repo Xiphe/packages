@@ -1,5 +1,5 @@
 import { type expect } from "@jest/globals";
-import { type ColorMatchers } from "./matchers/index.js";
+import { type ColorMatchers } from "./matchers.js";
 
 export {};
 declare module "@jest/expect" {
