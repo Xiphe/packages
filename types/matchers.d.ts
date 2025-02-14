@@ -1,5 +1,5 @@
-import { ExpectColorOptions } from "../src/config";
-import { Color } from "../src/lib/isSameColor";
+import { ExpectColorOptions } from "../src/config.js";
+import { Color } from "../src/lib/isSameColor.js";
 
 declare namespace matchers {
   interface ColorMatchers {

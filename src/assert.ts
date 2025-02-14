@@ -1,5 +1,5 @@
-import { ExpectColorOptions } from "./config";
-import { Color, isSameColor } from "./lib";
+import { ExpectColorOptions } from "./config.js";
+import { Color, isSameColor } from "./lib/index.js";
 
 export function assertSameColor(
   expected: string | Color,

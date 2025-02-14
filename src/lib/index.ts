@@ -1,2 +1,2 @@
-export * from "./isSameColor";
-export * from "./isSameColorValuesRounded";
+export * from "./isSameColor.js";
+export * from "./isSameColorValuesRounded.js";

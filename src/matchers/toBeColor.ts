@@ -1,5 +1,5 @@
-import { isSameColor } from "../lib";
-import { MatcherState } from "./matcherState";
+import { isSameColor } from "../lib/index.js";
+import { MatcherState } from "./matcherState.js";
 
 export function toBeColor(
   this: MatcherState,

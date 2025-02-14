@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import "../src/vitest";
-import { Color } from "../src/lib/isSameColor";
+import { Color } from "../src/lib/isSameColor.js";
 
 describe("toEqualColor", () => {
   it("compares keyword with keyword", () => {

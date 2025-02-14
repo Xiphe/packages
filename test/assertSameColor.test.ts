@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assertSameColor } from "../src/assert";
+import { assertSameColor } from "../src/assert.js";
 
 describe("assertSameColor", () => {
   it("should be a function", () => {

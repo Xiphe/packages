@@ -1,6 +1,6 @@
-import { config, ExpectColorOptions } from "../config";
-import { isSameColor } from "../lib";
-import { MatcherState } from "./matcherState";
+import { config, ExpectColorOptions } from "../config.js";
+import { isSameColor } from "../lib/index.js";
+import { MatcherState } from "./matcherState.js";
 
 export function toEqualColor(
   this: MatcherState,

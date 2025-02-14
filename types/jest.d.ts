@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 
-import { type ColorMatchers } from "./matchers";
+import { type ColorMatchers } from "./matchers/index.js";
 
 declare global {
   namespace jest {

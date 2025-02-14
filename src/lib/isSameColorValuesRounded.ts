@@ -2,7 +2,7 @@ import type {
   Color,
   IsSameColorResultMismatch,
   IsSameColorResultSame,
-} from "./isSameColor";
+} from "./isSameColor.js";
 
 export function isSameColorValuesRounded(
   expected: Color,

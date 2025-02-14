@@ -2,6 +2,6 @@
 
 // @ts-ignore
 import { expect } from "@jest/globals";
-import * as extensions from "./matchers";
+import * as extensions from "./matchers/index.js";
 
 expect.extend(extensions);

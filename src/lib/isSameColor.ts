@@ -1,6 +1,6 @@
 import convert from "color-convert";
 import parse from "color-parse";
-import { isSameColorValuesRounded } from "./isSameColorValuesRounded";
+import { isSameColorValuesRounded } from "./isSameColorValuesRounded.js";
 
 export type ColorSpace =
   | "rgb"

@@ -1,2 +1,2 @@
-export { toEqualColor } from "./toEqualColor";
-export { toBeColor } from "./toBeColor";
+export { toEqualColor } from "./toEqualColor.js";
+export { toBeColor } from "./toBeColor.js";
