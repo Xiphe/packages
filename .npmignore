@@ -2,6 +2,7 @@ coverage/
 dist/test/
 node_modules/
 test/
+src/
 .*
 tsconfig.json
 
