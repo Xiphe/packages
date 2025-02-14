@@ -1,0 +1,7 @@
+coverage/
+dist/test/
+node_modules/
+test/
+.*
+tsconfig.json
+
