@@ -54,6 +54,8 @@ assertSameColor("red", "red");
 ## Usage
 
 ```ts
+import { css } from "expect-color/lib";
+
 it("compares colors", () => {
   // Same color in same color space
   expect("rgb(255, 0, 255)").toBeColor("fuchsia");
@@ -65,4 +67,11 @@ it("compares colors", () => {
     borderColor: expect.toBeColor("fuchsia"),
   });
 });
+
+it("compares css templates", () => {
+  expect("1px solid rgb(0, 0, 0)").toEqualTemplate(
+    css`1px solid ${expect.toBeColor("black")}`,
+  );
+});
 ```
+
