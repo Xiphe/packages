@@ -1,6 +1,6 @@
-import { ExpectColorOptions } from "../src/config.js";
+import { ExpectColorOptions } from "../src/config.ts";
 import { Template } from "../src/lib/compareTemplate.ts";
-import { Color } from "../src/lib/isSameColor.js";
+import { Color } from "../src/lib/isSameColor.ts";
 
 export interface ColorMatchers<R> {
   /**

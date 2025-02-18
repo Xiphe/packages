@@ -9,6 +9,9 @@
     "build": "tsc"
   },
   "main": "dist/src/index.js",
+  "release": {
+    "extends": "../../release.config.js"
+  },
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
