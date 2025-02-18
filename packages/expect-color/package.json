@@ -1,6 +1,6 @@
 {
   "name": "expect-color",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "description": "make assertions on normalized color",
   "main": "dist/src/index.js",
