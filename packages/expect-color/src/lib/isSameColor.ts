@@ -47,8 +47,9 @@ export function isSameColor(
   { precision = 2, allowConversion = true }: IsSameColorOptions = {},
 ): IsSameColorResult {
   const parsedExpected =
-    typeof expected === "string" ? parse(expected) : expected;
-  const parsedActual = typeof actual === "string" ? parse(actual) : actual;
+    typeof expected === "string" ? parse(expected.trim()) : expected;
+  const parsedActual =
+    typeof actual === "string" ? parse(actual.trim()) : actual;
 
   if (!parsedExpected.space) {
     return { type: "error", error: `"${expected}" is not a valid color` };

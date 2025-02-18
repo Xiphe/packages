@@ -1,0 +1,57 @@
+{
+  "name": "expect-color",
+  "version": "0.3.0",
+  "type": "module",
+  "description": "make assertions on normalized color",
+  "main": "dist/src/index.js",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./lib": {
+      "types": "./dist/src/lib/index.d.ts",
+      "import": "./dist/src/lib/index.js"
+    },
+    "./matchers": {
+      "types": "./dist/src/matchers/index.d.ts",
+      "import": "./dist/src/matchers/index.js"
+    },
+    "./assert": {
+      "types": "./dist/src/assert.d.ts",
+      "import": "./dist/src/assert.js"
+    },
+    "./jest-globals": {
+      "types": "./types/jest-globals.d.ts",
+      "import": "./dist/src/jest-globals.js"
+    },
+    "./vitest": {
+      "types": "./types/vitest.d.ts",
+      "import": "./dist/src/vitest.js"
+    },
+    "./config": {
+      "types": "./dist/src/config.d.ts",
+      "import": "./dist/src/config.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest",
+    "prepare": "npm run build",
+    "build": "rm -rf dist && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Xiphe/expect-color.git"
+  },
+  "author": "Hannes Diercks <node@xiphe.net> (https://xiphe.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Xiphe/expect-color/issues"
+  },
+  "homepage": "https://github.com/Xiphe/expect-color#readme",
+  "dependencies": {
+    "match-template": "workspace:*",
+    "color-convert": "^3.0.1",
+    "color-parse": "^2.0.2"
+  }
+}

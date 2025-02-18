@@ -20,14 +20,6 @@ export interface ColorMatchers<R> {
    * expect('rgb(255, 0, 0)').toEqualColor('red');
    */
   toBeColor(color: string | Color): R;
-  /**
-   * @description
-   * Check if a string matches a template.
-   *
-   * @example
-   * expect('rgb(255, 0, 0)').toEqualTemplate('rgb(255, 0, 0)');
-   */
-  toEqualTemplate(template: Template): R;
 }
 
 export default ColorMatchers;

@@ -1,3 +1,4 @@
+import "match-template/jest-globals";
 import { type expect } from "@jest/globals";
 import { type ColorMatchers } from "./matchers.js";
 

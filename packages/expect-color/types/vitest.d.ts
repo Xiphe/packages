@@ -1,4 +1,5 @@
 import "vitest";
+import "match-template/vitest";
 import { type ColorMatchers } from "./matchers.js";
 
 declare module "vitest" {

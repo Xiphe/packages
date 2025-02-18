@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { css } from "../src/lib/css.js";
 import "../src/vitest.js";
+import "match-template/vitest";
 
 const styles = `
   background-color: #000;
@@ -10,37 +11,38 @@ const styles = `
 
 describe("css", () => {
   it("should match identical strings", () => {
-    expect("1px solid black").toEqualTemplate(css`1px solid black`);
+    expect("1px solid black").toMatchTemplate(css`1px solid black`);
   });
 
   it("should fail when strings are not identical", () => {
-    expect("1px solid black").not.toEqualTemplate(css`1px solid white`);
+    expect("1px solid black").not.toMatchTemplate(css`1px solid white`);
+
     expect(() =>
-      expect("1px solid black").toEqualTemplate(css`1px solid white`),
+      expect("1px solid black").toMatchTemplate(css`1px solid white`),
     ).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Expected [31m"1px solid black"[39m to equal template]`,
+      `[Error: Expected [31m"1px solid black"[39m to match template (static part mismatch)]`,
     );
     expect(() =>
-      expect("1px solid black").not.toEqualTemplate(css`1px solid black`),
+      expect("1px solid black").not.toMatchTemplate(css`1px solid black`),
     ).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Expected [31m"1px solid black"[39m not to equal template]`,
+      `[Error: Expected [31m"1px solid black"[39m not to match template]`,
     );
   });
 
   it("should match when colors are equivalent", () => {
-    expect("1px solid rgb(0, 0, 0)").toEqualTemplate(
+    expect("1px solid rgb(0, 0, 0)").toMatchTemplate(
       css`1px solid ${expect.toEqualColor("#000")}`,
     );
   });
 
   it("should handle whitespace", () => {
-    expect("  1px solid   rgb(0, 0, 0)  ").toEqualTemplate(
+    expect("1px   solid   rgb(0, 0, 0)").toMatchTemplate(
       css`1px solid ${expect.toEqualColor("#000")}`,
     );
   });
 
   it("should match multiple colors in CSS", () => {
-    expect(styles).toEqualTemplate(
+    expect(styles).toMatchTemplate(
       css`
         background-color: ${expect.toEqualColor("black")};
         color: ${expect.toEqualColor("white")};
@@ -55,7 +57,7 @@ describe("css", () => {
       color:
       #fff;
       border:    1px    solid    #000;
-    `).toEqualTemplate(
+    `).toMatchTemplate(
       css`
         background-color: ${expect.toEqualColor("black")};
         color: ${expect.toEqualColor("white")};
@@ -72,7 +74,7 @@ describe("css", () => {
       content: "Hello world";
       --custom-prop: var(--other-prop);
       transform: rotate(45deg);
-    `).toEqualTemplate(
+    `).toMatchTemplate(
       css`
         width: ${expect.any(String)};
         background: ${expect.stringMatching(/^url\(".*"\)$/)};
