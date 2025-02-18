@@ -45,7 +45,7 @@ jobs:
           pnpm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
           pnpm whoami
           pnpm -r --workspace-concurrency=1 exec -- npx --no-install semantic-release
-          pnpm -r --no-git-checks --access public publish
+          pnpm -r --no-git-checks publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
