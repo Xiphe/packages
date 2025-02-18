@@ -1,6 +1,6 @@
 {
   "name": "expect-template",
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "type": "module",
   "description": "make assertions with template literals",
   "scripts": {
