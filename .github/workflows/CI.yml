@@ -42,9 +42,10 @@ jobs:
         run: |
           set -e  # Exit immediately if a command exits with a non-zero status.
 
+          pnpm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          pnpm whoami
           pnpm -r --workspace-concurrency=1 exec -- npx --no-install semantic-release
-          pnpm -r publish
-       
+          pnpm -r --no-git-checks --access public publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

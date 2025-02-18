@@ -10,7 +10,10 @@
   },
   "main": "dist/src/index.js",
   "release": {
-    "extends": "../../release.config.js"
+    "extends": [
+      "semantic-release-monorepo",
+      "../../release.config.js"
+    ]
   },
   "exports": {
     ".": {

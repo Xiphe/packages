@@ -1,6 +1,5 @@
 /** @type {import('semantic-release').Options} */
 export default {
-  extends: "semantic-release-monorepo",
   branches: [
     "+([0-9])?(.{+([0-9]),x}).x",
     "main",

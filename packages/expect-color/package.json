@@ -49,7 +49,10 @@
     "url": "https://github.com/Xiphe/expect-color/issues"
   },
   "release": {
-    "extends": "../../release.config.js"
+    "extends": [
+      "semantic-release-monorepo",
+      "../../release.config.js"
+    ]
   },
   "homepage": "https://github.com/Xiphe/expect-color#readme",
   "dependencies": {
