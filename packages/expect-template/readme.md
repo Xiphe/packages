@@ -1,11 +1,11 @@
-# match-template
+# expect-template
 
 Make assertions on template literals
 
 ## Installation
 
 ```bash
-npm install match-template
+npm install expect-template
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install match-template
 In you test-setup-file add:
 
 ```ts
-import "match-template";
+import "expect-template";
 ```
 
 ### With @jest/globals
@@ -23,7 +23,7 @@ import "match-template";
 In you test-setup-file add:
 
 ```ts
-import "match-template/jest-globals";
+import "expect-template/jest-globals";
 ```
 
 ### With Vitest
@@ -31,13 +31,13 @@ import "match-template/jest-globals";
 In you test-setup-file add:
 
 ```ts
-import "match-template/vitest";
+import "expect-template/vitest";
 ```
 
 ### With another Jest-compatible expect
 
 ```ts
-import * as matchers from "match-template/matchers";
+import * as matchers from "expect-template/matchers";
 import { expect } from "my-test-runner/expect";
 
 expect.extend(matchers);

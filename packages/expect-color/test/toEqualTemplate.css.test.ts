@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { css } from "../src/lib/css.js";
 import "../src/vitest.js";
-import "match-template/vitest";
+import "expect-template/vitest";
 
 const styles = `
   background-color: #000;

@@ -36,8 +36,8 @@
   },
   "scripts": {
     "test": "vitest",
-    "prepare": "npm run build",
-    "build": "rm -rf dist && tsc"
+    "prepare": "rm -rf dist && npm run build",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/Xiphe/expect-color#readme",
   "dependencies": {
-    "match-template": "workspace:*",
+    "expect-template": "workspace:^",
     "color-convert": "^3.0.1",
     "color-parse": "^2.0.2"
   }

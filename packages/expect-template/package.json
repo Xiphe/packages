@@ -1,12 +1,12 @@
 {
-  "name": "match-template",
+  "name": "expect-template",
   "version": "0.0.1",
   "type": "module",
   "description": "make assertions with template literals",
   "scripts": {
     "test": "vitest",
-    "prepare": "npm run build",
-    "build": "rm -rf dist && tsc"
+    "prepare": "rm -rf dist && npm run build",
+    "build": "tsc"
   },
   "main": "dist/src/index.js",
   "exports": {

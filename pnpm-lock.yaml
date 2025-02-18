@@ -26,11 +26,11 @@ importers:
       color-parse:
         specifier: ^2.0.2
         version: 2.0.2
-      match-template:
-        specifier: workspace:*
-        version: link:../match-template
+      expect-template:
+        specifier: workspace:^*
+        version: link:../expect-template
 
-  packages/match-template: {}
+  packages/expect-template: {}
 
 packages:
 

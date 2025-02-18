@@ -1,4 +1,4 @@
-import { Template } from "match-template/lib";
+import { Template } from "expect-template/lib";
 
 export function css(
   strings: TemplateStringsArray,

@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 
-import "match-template/jest";
+import "expect-template/jest";
 import { type ColorMatchers } from "./matchers.js";
 
 declare global {
