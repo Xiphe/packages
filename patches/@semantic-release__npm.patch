@@ -1,0 +1,40 @@
+diff --git a/lib/prepare.js b/lib/prepare.js
+index 3e76bec44cf595a1b4141728336bed904d4d518d..8311e86fe9be59c463429fdaec17e9567e69bec8 100644
+--- a/lib/prepare.js
++++ b/lib/prepare.js
+@@ -1,7 +1,9 @@
+ import path from "path";
+-import { move } from "fs-extra";
++import fsExtraPkg from 'fs-extra';
+ import { execa } from "execa";
+ 
++const { move, readJSON, writeJSON } = fsExtraPkg;
++
+ export default async function (
+   npmrc,
+   { tarballDir, pkgRoot },
+@@ -11,19 +13,11 @@ export default async function (
+ 
+   logger.log("Write version %s to package.json in %s", version, basePath);
+ 
+-  const versionResult = execa(
+-    "npm",
+-    ["version", version, "--userconfig", npmrc, "--no-git-tag-version", "--allow-same-version"],
+-    {
+-      cwd: basePath,
+-      env,
+-      preferLocal: true,
+-    }
+-  );
+-  versionResult.stdout.pipe(stdout, { end: false });
+-  versionResult.stderr.pipe(stderr, { end: false });
+-
+-  await versionResult;
++  // Read and update package.json directly instead of using npm version
++  const packageJsonPath = path.join(basePath, 'package.json');
++  const packageJson = await readJSON(packageJsonPath);
++  packageJson.version = version;
++  await writeJSON(packageJsonPath, packageJson, { spaces: 2 });
+ 
+   if (tarballDir) {
+     logger.log("Creating npm package version %s", version);
