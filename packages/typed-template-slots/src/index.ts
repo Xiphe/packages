@@ -1,38 +1,37 @@
-export type TemplatePart =
+export type TemplatePart<SlotName extends string> =
   | string
   | {
-      s: string;
+      s: SlotName;
     };
 
-export type Slots<T extends string> = Array<{ __slot: T } | string>;
+export type Template<SlotNames extends string = string> =
+  TemplatePart<SlotNames>[];
 
-export type ExtractSlotNames<T extends Slots<string>> = T extends Array<infer U>
-  ? U extends { __slot: infer S }
+export type ExtractSlotNames<T extends Template<string>> = T extends Array<
+  infer U
+>
+  ? U extends { s: infer S }
     ? S extends string
       ? S
       : never
     : never
   : never;
 
-export type Template<SlotNames extends string = string> = TemplatePart[] & {
-  "#": SlotNames;
-};
-
 /**
  * Create a slot marker for template interpolation
  */
-export function slot<T extends string>(name: T): { __slot: T } {
-  return { __slot: name };
+export function slot<T extends string>(name: T): { s: T } {
+  return { s: name };
 }
 
 /**
  * Create a template with slots from a tagged template literal
  */
-export function tagSlots<Values extends Slots<string>>(
+export function tagSlots<Values extends Template<string>>(
   strings: TemplateStringsArray,
   ...values: Values
 ) {
-  const parts: TemplatePart[] = [];
+  const parts: TemplatePart<string>[] = [];
 
   strings.forEach((str, i) => {
     if (str) {
@@ -42,9 +41,12 @@ export function tagSlots<Values extends Slots<string>>(
     if (i < values.length) {
       const value = values[i];
 
-      if (typeof value === "object" && "__slot" in value) {
-        parts.push({ s: value.__slot });
-      } else if (typeof value === "string") {
+      if (
+        typeof value === "string" ||
+        (typeof value === "object" &&
+          "s" in value &&
+          typeof value.s === "string")
+      ) {
         parts.push(value);
       } else {
         throw new Error("Invalid value type");

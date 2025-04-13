@@ -3,7 +3,6 @@ import {
   interpolate,
   slot,
   createInterpolator,
-  Slots,
 } from "../src/index.js";
 import { describe, it, expect } from "vitest";
 
@@ -73,6 +72,15 @@ describe("TypeSlot Usage", () => {
       expect(result).toBe("Hello !");
 
       process.env.NODE_ENV = originalNodeEnv;
+    });
+  });
+
+  describe("pre-compiled templates", () => {
+    it("should work with pre-compiled templates", () => {
+      const template = ["Hello ", slot("name"), "!"];
+      const result = interpolate(template, { name: "World" });
+
+      expect(result).toBe("Hello World!");
     });
   });
 
