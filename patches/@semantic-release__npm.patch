@@ -31,7 +31,7 @@ index 3e76bec44cf595a1b4141728336bed904d4d518d..8311e86fe9be59c463429fdaec17e956
 -
 -  await versionResult;
 +  // Read and update package.json directly instead of using npm version
-+  const packageJsonPath = path.join(basePath, 'package.json');
++  const packageJsonPath = path.join(basePath, 'packagex.json');
 +  const packageJson = await readJSON(packageJsonPath);
 +  packageJson.version = version;
 +  await writeJSON(packageJsonPath, packageJson, { spaces: 2 });
