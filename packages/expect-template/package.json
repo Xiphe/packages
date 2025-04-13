@@ -36,5 +36,13 @@
       "types": "./types/vitest.d.ts",
       "import": "./dist/src/vitest.js"
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Xiphe/packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Xiphe/packages/issues"
+  },
+  "homepage": "https://github.com/Xiphe/packages/tree/main/packages/expect-template#readme"
 }

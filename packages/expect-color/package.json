@@ -39,22 +39,22 @@
     "prepare": "rm -rf dist && npm run build",
     "build": "tsc"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/Xiphe/expect-color.git"
-  },
   "author": "Hannes Diercks <node@xiphe.net> (https://xiphe.net/)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Xiphe/expect-color/issues"
-  },
   "release": {
     "extends": [
       "semantic-release-monorepo",
       "../../release.config.js"
     ]
   },
-  "homepage": "https://github.com/Xiphe/expect-color#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Xiphe/packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Xiphe/packages/issues"
+  },
+  "homepage": "https://github.com/Xiphe/packages/tree/main/packages/expect-color#readme",
   "dependencies": {
     "expect-template": "workspace:^",
     "color-convert": "^3.0.1",
