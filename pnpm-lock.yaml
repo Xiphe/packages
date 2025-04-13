@@ -43,11 +43,7 @@ importers:
 
   packages/expect-template: {}
 
-  packages/typeslot:
-    devDependencies:
-      '@types/node':
-        specifier: 22.14.1
-        version: 22.14.1
+  packages/typed-template-slots: {}
 
 packages:
 
@@ -2397,6 +2393,7 @@ snapshots:
   '@types/node@22.14.1':
     dependencies:
       undici-types: 6.21.0
+    optional: true
 
   '@types/normalize-package-data@2.4.4': {}
 
@@ -3743,7 +3740,8 @@ snapshots:
   uglify-js@3.19.3:
     optional: true
 
-  undici-types@6.21.0: {}
+  undici-types@6.21.0:
+    optional: true
 
   unicode-emoji-modifier-base@1.0.0: {}
 
