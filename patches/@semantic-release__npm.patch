@@ -1,5 +1,5 @@
 diff --git a/lib/prepare.js b/lib/prepare.js
-index 3e76bec44cf595a1b4141728336bed904d4d518d..8311e86fe9be59c463429fdaec17e9567e69bec8 100644
+index 3e76bec44cf595a1b4141728336bed904d4d518d..9184e67bf5b69aff75aa95c0cb90f16a87145dd9 100644
 --- a/lib/prepare.js
 +++ b/lib/prepare.js
 @@ -1,7 +1,9 @@
@@ -13,10 +13,12 @@ index 3e76bec44cf595a1b4141728336bed904d4d518d..8311e86fe9be59c463429fdaec17e956
  export default async function (
    npmrc,
    { tarballDir, pkgRoot },
-@@ -11,19 +13,11 @@ export default async function (
+@@ -9,21 +11,19 @@ export default async function (
+ ) {
+   const basePath = pkgRoot ? path.resolve(cwd, pkgRoot) : cwd;
  
-   logger.log("Write version %s to package.json in %s", version, basePath);
- 
+-  logger.log("Write version %s to package.json in %s", version, basePath);
+-
 -  const versionResult = execa(
 -    "npm",
 -    ["version", version, "--userconfig", npmrc, "--no-git-tag-version", "--allow-same-version"],
@@ -28,13 +30,20 @@ index 3e76bec44cf595a1b4141728336bed904d4d518d..8311e86fe9be59c463429fdaec17e956
 -  );
 -  versionResult.stdout.pipe(stdout, { end: false });
 -  versionResult.stderr.pipe(stderr, { end: false });
--
++  logger.log("Write version %s to package.json in %s (patched)", version, basePath);
+ 
 -  await versionResult;
-+  // Read and update package.json directly instead of using npm version
-+  const packageJsonPath = path.join(basePath, 'packagex.json');
-+  const packageJson = await readJSON(packageJsonPath);
-+  packageJson.version = version;
-+  await writeJSON(packageJsonPath, packageJson, { spaces: 2 });
++  try {
++    // Read and update package.json directly instead of using npm version
++    const packageJsonPath = path.join(basePath, 'package.json');
++    const packageJson = await readJSON(packageJsonPath);
++    packageJson.version = version;
++    await writeJSON(packageJsonPath, packageJson, { spaces: 2 });
++    console.log("wrote package.json", packageJsonPath);
++  } catch (e) {
++    logger.error("Error writing package.json", e);
++    throw e;
++  }
  
    if (tarballDir) {
      logger.log("Creating npm package version %s", version);
