@@ -48,11 +48,11 @@ jobs:
 
           pnpm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
           pnpm whoami
-          pnpm -r --workspace-concurrency=1 exec -- bash -c 'echo -------; pwd; echo  -------; echo && npx --no-install semantic-release'
+          pnpm -r --workspace-concurrency=1 exec -- bash -c 'echo;echo -------; pwd; echo  -------; echo && npx --no-install semantic-release'
 
-          git status
           # Publish packages if there are changes
-          # pnpm -r --no-git-checks --filter="[HEAD]" publish --access public
+          echo;echo -------; echo publishing; echo  -------; echo;
+          pnpm -r --no-git-checks --filter="[HEAD]" publish --access public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
