@@ -1,0 +1,35 @@
+{
+  "name": "typed-template-slots",
+  "version": "0.0.0-development",
+  "type": "module",
+  "description": "make assertions on normalized color",
+  "main": "dist/src/index.js",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest",
+    "prepare": "rm -rf dist && npm run build",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Xiphe/packages.git"
+  },
+  "author": "Hannes Diercks <node@xiphe.net> (https://xiphe.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Xiphe/packages/issues"
+  },
+  "release": {
+    "extends": [
+      "semantic-release-monorepo",
+      "../../release.config.js"
+    ]
+  },
+  "homepage": "https://github.com/Xiphe/packages/tree/main/packages/typed-template-slots#readme"
+}
