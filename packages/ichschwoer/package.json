@@ -1,0 +1,66 @@
+{
+  "name": "ichschwoer",
+  "version": "0.0.0-development",
+  "type": "module",
+  "description": "advanced promise utilities",
+  "main": "dist/src/index.js",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./batch-resolve": {
+      "types": "./dist/src/batch-resolve.d.ts",
+      "import": "./dist/src/batch-resolve.js"
+    },
+    "./deferred": {
+      "types": "./dist/src/deferred.d.ts",
+      "import": "./dist/src/deferred.js"
+    },
+    "./queue": {
+      "types": "./dist/src/queue.d.ts",
+      "import": "./dist/src/queue.js"
+    },
+    "./rate-limit": {
+      "types": "./dist/src/rate-limit.d.ts",
+      "import": "./dist/src/rate-limit.js"
+    },
+    "./scatter": {
+      "types": "./dist/src/scatter.d.ts",
+      "import": "./dist/src/scatter.js"
+    },
+    "./throttle": {
+      "types": "./dist/src/throttle.d.ts",
+      "import": "./dist/src/throttle.js"
+    }
+  },
+  "keywords": [
+    "utils",
+    "promises",
+    "batch",
+    "queue",
+    "rate-limit"
+  ],
+  "scripts": {
+    "test": "vitest",
+    "prepare": "rm -rf dist && npm run build",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Xiphe/packages.git"
+  },
+  "author": "Hannes Diercks <node@xiphe.net> (https://xiphe.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Xiphe/packages/issues"
+  },
+  "release": {
+    "extends": [
+      "semantic-release-monorepo",
+      "../../release.config.js"
+    ]
+  },
+  "homepage": "https://github.com/Xiphe/packages/tree/main/packages/ichschwoer#readme"
+}
