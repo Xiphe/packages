@@ -1,3 +1,4 @@
+/* c8 ignore start */
 /** @type {import('semantic-release').Options} */
 export default {
   branches: [
@@ -24,3 +25,4 @@ export default {
     "@semantic-release/github",
   ],
 };
+/* c8 ignore stop */
