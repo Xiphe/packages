@@ -33,6 +33,10 @@
     "./throttle": {
       "types": "./dist/src/throttle.d.ts",
       "import": "./dist/src/throttle.js"
+    },
+    "./simulate-progress": {
+      "types": "./dist/src/simulate-progress.d.ts",
+      "import": "./dist/src/simulate-progress.js"
     }
   },
   "keywords": [

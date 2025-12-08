@@ -17,6 +17,7 @@ npm i ichschwoer
 - `createBatchResolve`
 - `createScatter`
 - `createThrottle`
+- `simulateProgress`
 
 ## WTF is that name?
 
