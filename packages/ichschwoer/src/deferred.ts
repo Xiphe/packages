@@ -1,3 +1,6 @@
+/**
+ * @deprecated use `Promise.withResolvers()`
+ */
 export default class Deferred<T> {
   readonly promise: Promise<T>;
   readonly resolve!: (value: T) => T;
