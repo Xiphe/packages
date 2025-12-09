@@ -1,5 +1,5 @@
 import Deferred from "./deferred.js";
-import type { Job } from "./job.js";
+import type { Job, JobHandler } from "./JobTypes.js";
 
 export const THROTTLE_DROPPED = Symbol("THROTTLE_DROPPED");
 
@@ -65,7 +65,7 @@ export default function createThrottle(windowMs: number) {
         });
       });
     },
-    onEmpty(cb: () => void) {
+    onEmpty(cb) {
       onEmpty.push(cb);
 
       return () => {
@@ -83,10 +83,16 @@ export default function createThrottle(windowMs: number) {
 
       return d.promise;
     },
+    /**
+     * @deprecated Use `clear()` instead
+     */
     reset() {
+      this.clear();
+    },
+    clear() {
       jobs.forEach(([d]) => d.resolve(THROTTLE_DROPPED));
       last = -Infinity;
       jobs.length = 0;
     },
-  };
+  } satisfies JobHandler<"job", typeof THROTTLE_DROPPED>;
 }

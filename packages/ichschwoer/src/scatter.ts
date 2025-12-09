@@ -1,4 +1,4 @@
-import type { Job } from "./job.js";
+import { JobHandler } from "./JobTypes.js";
 
 /**
  * Make sure all callbacks are executed with at least set ms delay
@@ -37,7 +37,7 @@ export default function createScatter(delayMs: number) {
     get length() {
       return jobs.length;
     },
-    onEmpty(cb: () => void) {
+    onEmpty(cb) {
       onEmpty.push(cb);
 
       return () => {
@@ -56,12 +56,12 @@ export default function createScatter(delayMs: number) {
         });
       });
     },
-    push<T>(job: Job<T>): Promise<T> {
+    push(job) {
       if (closed) {
         throw new Error("Scatter is closed");
       }
 
-      return new Promise<T>((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         jobs.push(() => Promise.resolve(job()).then(resolve, reject));
         trigger();
       });
@@ -69,5 +69,5 @@ export default function createScatter(delayMs: number) {
     clear() {
       jobs.length = 0;
     },
-  };
+  } satisfies JobHandler;
 }

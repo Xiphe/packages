@@ -1,5 +1,4 @@
-export type { Value } from "./batch-resolve.js";
-export type { Job } from "./job.js";
+export type { Job, Value, JobHandler } from "./JobTypes.js";
 
 export { default as createBatchResolve } from "./batch-resolve.js";
 export { default as Deferred } from "./deferred.js";

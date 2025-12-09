@@ -1,4 +1,4 @@
-import type { Job } from "./job.js";
+import type { Job, JobHandler } from "./JobTypes.js";
 
 /**
  * Create a rateLimited queue that only executes max Jobs within windowMs
@@ -46,19 +46,19 @@ export default function createRateLimit(max: number, windowMs: number) {
         });
       });
     },
-    onEmpty(cb: () => void) {
+    onEmpty(cb) {
       onEmpty.push(cb);
 
       return () => {
         onEmpty.splice(onEmpty.indexOf(cb), 1);
       };
     },
-    push<T>(job: Job<T>): Promise<T> {
+    push(job) {
       if (closed) {
         throw new Error("RateLimit is closed");
       }
 
-      return new Promise<T>((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         jobs.push(() => Promise.resolve(job()).then(resolve, reject));
         trigger();
       });
@@ -66,5 +66,5 @@ export default function createRateLimit(max: number, windowMs: number) {
     clear() {
       jobs.length = 0;
     },
-  };
+  } satisfies JobHandler;
 }
