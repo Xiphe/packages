@@ -147,6 +147,23 @@ try {
 }
 ```
 
+### `allFiltered`
+
+Filters out settled promises that don't match the given filter.
+While still failing fast on rejections that are not filtered out.
+
+Note that compared to `Promise.all` the result size and therefore order can change.
+
+```ts
+import { allFiltered } from "ichschwoer";
+
+const results = await allFiltered(
+  [Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)],
+  /* Allow any rejection and any fulfilled value that is not 2 */
+  (result) => result.status === "rejected" || result.value !== 2,
+);
+```
+
 ### JobHandlers
 
 `createQueue`, `createRateLimit`, `createBatchResolve`, `createScatter`, `createThrottle` all satisfy the `JobHandler` interface.

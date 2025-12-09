@@ -19,3 +19,4 @@ export {
   AbortError,
   isAbortError,
 } from "./with-abort.js";
+export { default as allFiltered } from "./all-filtered.js";
