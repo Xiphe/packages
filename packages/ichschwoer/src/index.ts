@@ -12,3 +12,8 @@ export {
   type SimulateProgressOptions,
   type ProgressHandler,
 } from "./simulate-progress.js";
+export {
+  default as withAbort,
+  AbortError,
+  isAbortError,
+} from "./with-abort.js";
