@@ -1,5 +1,9 @@
 import { describe, vi, it, expect, beforeEach, afterEach } from "vitest";
-import createThrottle, { THROTTLE_DROPPED } from "../src/throttle.js";
+import createThrottle, {
+  allButDropped,
+  isDropped,
+  THROTTLE_DROPPED,
+} from "../src/throttle.js";
 import Deferred from "../src/deferred.js";
 
 describe("Throttle", () => {
@@ -42,7 +46,7 @@ describe("Throttle", () => {
     // First job is executed
     expect(check).toEqual(["One"]);
     // Second job is dropped
-    expect(await two).toEqual(THROTTLE_DROPPED);
+    await expect(two).rejects.toEqual(THROTTLE_DROPPED);
     // We still have a trailing job
     expect(throttle.trailing).toBe(true);
 
@@ -65,7 +69,7 @@ describe("Throttle", () => {
     vi.advanceTimersByTime(100);
     expect(check).toEqual(["One", "Three"]);
     // fourth job has been dropped
-    expect(await four).toEqual(THROTTLE_DROPPED);
+    await expect(four).rejects.toEqual(THROTTLE_DROPPED);
 
     // finally we resolve the third job
     threeD.resolve();
@@ -103,7 +107,7 @@ describe("Throttle", () => {
     });
 
     // seventh job has been dropped
-    expect(await seven).toEqual(THROTTLE_DROPPED);
+    await expect(seven).rejects.toEqual(THROTTLE_DROPPED);
     expect(check).toEqual(["One", "Three", "Five", "Empty", "Six", "Empty"]);
 
     // still waiting on eighth job
@@ -113,11 +117,34 @@ describe("Throttle", () => {
     throttle.reset();
 
     // all jobs have been dropped
-    expect(await eight).toEqual(THROTTLE_DROPPED);
+    await expect(eight).rejects.toEqual(THROTTLE_DROPPED);
 
     // queue is empty
     expect(throttle.trailing).toBe(false);
     expect(throttle.waiting).toBe(false);
+  });
+
+  it("can filter out dropped jobs", async () => {
+    const throttle = createThrottle();
+
+    expect(
+      await allButDropped(
+        ["One", "Two", "Three"].map((v) => throttle.push(() => v)),
+      ),
+    ).toEqual(["One", "Three"]);
+  });
+
+  it("also works well with allSettled, when that's your jam", async () => {
+    const throttle = createThrottle();
+    const results = await Promise.allSettled([
+      ...["One", "Two", "Three"].map((v) => throttle.push(() => v)),
+      throttle.push(() => Promise.reject("Nope")),
+    ]);
+
+    expect(results.filter((r) => !isDropped(r))).toEqual([
+      { status: "fulfilled", value: "One" },
+      { status: "rejected", reason: "Nope" },
+    ]);
   });
 
   it("can be drained", async () => {
@@ -125,13 +152,16 @@ describe("Throttle", () => {
     const resolved = Promise.resolve();
 
     throttle.push(() => resolved);
-    throttle.push(() => resolved);
+    const p = expect(throttle.push(() => resolved)).rejects.toEqual(
+      THROTTLE_DROPPED,
+    );
     throttle.push(() => resolved);
     const drained = throttle.drain();
 
     await expect(() =>
       throttle.push(() => {}),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`[Error: Throttle is closed]`);
+    await p;
 
     vi.advanceTimersByTime(200);
     await drained;

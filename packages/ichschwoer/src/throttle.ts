@@ -1,3 +1,4 @@
+import allFiltered from "./all-filtered.js";
 import Deferred from "./deferred.js";
 import type { Job, JobHandler } from "./JobTypes.js";
 
@@ -7,7 +8,7 @@ export const THROTTLE_DROPPED = Symbol("THROTTLE_DROPPED");
  * Drop jobs that are called earlier than windowMs from the last job
  * while ensuring the latest job is called after windowMs
  */
-export default function createThrottle(windowMs: number) {
+export default function createThrottle(windowMs: number = 0) {
   let last = -Infinity;
   let closed = false;
   const onEmpty: (() => void)[] = [];
@@ -15,7 +16,7 @@ export default function createThrottle(windowMs: number) {
 
   const trigger = () => {
     if (jobs.length > 2) {
-      jobs[1][0].resolve(THROTTLE_DROPPED);
+      jobs[1][0].reject(THROTTLE_DROPPED);
       jobs.splice(1, 1);
       return;
     }
@@ -77,7 +78,7 @@ export default function createThrottle(windowMs: number) {
         throw new Error("Throttle is closed");
       }
 
-      const d = new Deferred<T | typeof THROTTLE_DROPPED>();
+      const d = new Deferred<T>();
       jobs.push([d, job]);
       trigger();
 
@@ -90,9 +91,19 @@ export default function createThrottle(windowMs: number) {
       this.clear();
     },
     clear() {
-      jobs.forEach(([d]) => d.resolve(THROTTLE_DROPPED));
+      jobs.forEach(([d]) => d.reject(THROTTLE_DROPPED));
       last = -Infinity;
       jobs.length = 0;
     },
-  } satisfies JobHandler<"job", typeof THROTTLE_DROPPED>;
+  } satisfies JobHandler;
+}
+
+export function isDropped<T>(
+  result: PromiseSettledResult<T>,
+): result is PromiseRejectedResult {
+  return result.status === "rejected" && result.reason === THROTTLE_DROPPED;
+}
+
+export function allButDropped<T extends Promise<unknown>[]>(promises: T) {
+  return allFiltered(promises, (result) => !isDropped(result));
 }

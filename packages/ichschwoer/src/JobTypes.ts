@@ -1,12 +1,7 @@
 export type Job<T> = () => PromiseLike<T> | T;
 export type Value<T> = Promise<T> | T;
-export type JobHandler<
-  Subject extends "job" | "value" = "job",
-  InternalReturn = never,
-> = {
-  push<T>(
-    job: Subject extends "job" ? Job<T> : Value<T>,
-  ): Promise<T | InternalReturn>;
+export type JobHandler = {
+  push<T>(job: Job<T>): Promise<T>;
   drain(): Promise<void>;
   onEmpty(callback: () => void): () => void;
   clear(): void;

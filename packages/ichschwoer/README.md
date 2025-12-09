@@ -87,24 +87,19 @@ await Promise.all(
 Drops jobs called earlier than windowMs from the last job execution.
 
 ```ts
-import { createThrottle, THROTTLE_DROPPED } from "ichschwoer";
+import { createThrottle, allButDropped } from "ichschwoer";
 
 const throttle = createThrottle(1000); // 1 second window
 const lotsOfIds = [1, 2, 3, 4, 5];
 
-// rapid requests: only the last one executes, others may be dropped
-const results = await Promise.all(
+// rapid requests: only the first and last one execute, others may be dropped
+const results = await allButDropped(
   lotsOfIds.map((id) =>
     throttle.push(() => fetch(`https://example.org/api/${id}`)),
   ),
 );
 
-// check which requests were dropped
-results.forEach((result, index) => {
-  if (result === THROTTLE_DROPPED) {
-    console.log(`Request ${index} was dropped`);
-  }
-});
+console.log(results); // [1, 5]
 ```
 
 ### `simulateProgress`
