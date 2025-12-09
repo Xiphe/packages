@@ -58,7 +58,9 @@ const lotsOfIds = [1, 2, 3, 4, 5];
 
 // all requests are batched and resolve together after 500ms
 await Promise.all(
-  lotsOfIds.map((id) => batch.push(fetch(`https://example.org/api/${id}`))),
+  lotsOfIds.map((id) =>
+    batch.push(() => fetch(`https://example.org/api/${id}`)),
+  ),
 );
 ```
 

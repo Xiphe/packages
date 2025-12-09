@@ -1,4 +1,4 @@
-import type { JobHandler, Value } from "./JobTypes.js";
+import type { JobHandler } from "./JobTypes.js";
 
 /**
  * Create a handler that artificially delays promises to resolve together
@@ -13,7 +13,7 @@ export default function createBatchResolve(windowMs: number = 0) {
     get length(): number {
       return Math.max(current.length - 1, 0);
     },
-    async push(value) {
+    async push(job) {
       if (closed) {
         throw new Error("BatchResolve is closed");
       }
@@ -40,6 +40,7 @@ export default function createBatchResolve(windowMs: number = 0) {
           }),
         );
       }
+      const value = job();
       chunk.push(Promise.resolve(value));
 
       await chunk[0];
@@ -68,5 +69,5 @@ export default function createBatchResolve(windowMs: number = 0) {
         onEmpty.splice(onEmpty.indexOf(cb), 1);
       };
     },
-  } satisfies JobHandler<"value">;
+  } satisfies JobHandler;
 }

@@ -16,16 +16,22 @@ describe("batchResolve", () => {
 
     const checkResolve: string[] = [];
 
-    const r1 = batch.push(d1.promise).then(() => {
-      checkResolve.push("One");
-    });
-    const r2 = batch.push(Promise.reject(new Error("Nope"))).catch((e) => {
-      expect(e.message).toBe("Nope");
-      checkResolve.push("Two");
-    });
-    const r3 = batch.push("3").then(() => {
-      checkResolve.push("Three");
-    });
+    const r1 = batch
+      .push(() => d1.promise)
+      .then(() => {
+        checkResolve.push("One");
+      });
+    const r2 = batch
+      .push(() => Promise.reject(new Error("Nope")))
+      .catch((e) => {
+        expect(e.message).toBe("Nope");
+        checkResolve.push("Two");
+      });
+    const r3 = batch
+      .push(() => "3")
+      .then(() => {
+        checkResolve.push("Three");
+      });
 
     expect(checkResolve).toEqual([]);
     expect(batch.length).toBe(3);
@@ -35,9 +41,11 @@ describe("batchResolve", () => {
     expect(checkResolve).toEqual([]);
     expect(batch.length).toBe(0);
 
-    const r4 = batch.push(null).then(() => {
-      checkResolve.push("Four");
-    });
+    const r4 = batch
+      .push(() => null)
+      .then(() => {
+        checkResolve.push("Four");
+      });
 
     d1.resolve("1");
     await Promise.all([r1, r2, r3]);
@@ -58,7 +66,7 @@ describe("batchResolve", () => {
     const checkResolve: string[] = [];
 
     ["One", "Two", "Three"].map((v) =>
-      batch.push(v).then(() => checkResolve.push(v)),
+      batch.push(() => v).then(() => checkResolve.push(v)),
     );
 
     vi.advanceTimersByTime(90);
@@ -70,9 +78,11 @@ describe("batchResolve", () => {
 
     // This is effectively a new batch, even though the original windowMs
     // is not yet reached
-    batch.push("4").then(() => {
-      checkResolve.push("Four");
-    });
+    batch
+      .push(() => "4")
+      .then(() => {
+        checkResolve.push("Four");
+      });
 
     await vi.advanceTimersByTimeAsync(50);
 
@@ -97,7 +107,7 @@ describe("batchResolve", () => {
     cancelOnEmpty();
 
     const d = new Deferred<void>();
-    batch.push(d.promise).then(() => checkResolve.push("One"));
+    batch.push(() => d.promise).then(() => checkResolve.push("One"));
 
     expect(checkResolve).toEqual([]);
     expect(batch.length).toBe(1);
@@ -106,7 +116,7 @@ describe("batchResolve", () => {
     vi.advanceTimersByTime(150);
 
     // Create second chunk
-    batch.push("2").then(() => checkResolve.push("Two"));
+    batch.push(() => "2").then(() => checkResolve.push("Two"));
 
     // resolve first chunk
     d.resolve();
@@ -126,12 +136,14 @@ describe("batchResolve", () => {
     const batch = createBatchResolve(100);
     const checkResolve: string[] = [];
 
-    ["One", "Two"].map((v) => batch.push(v).then(() => checkResolve.push(v)));
+    ["One", "Two"].map((v) =>
+      batch.push(() => v).then(() => checkResolve.push(v)),
+    );
 
     batch.drain().then(() => checkResolve.push("Drained"));
 
     await expect(
-      batch.push("Three"),
+      batch.push(() => "Three"),
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       `[Error: BatchResolve is closed]`,
     );
