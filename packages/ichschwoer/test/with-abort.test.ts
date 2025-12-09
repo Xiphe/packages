@@ -12,11 +12,9 @@ describe("withAbort", () => {
 
   it("rejects with AbortError when abort signal is triggered", async () => {
     const controller = new AbortController();
-    const deferred = new Promise((resolve) => {
-      setTimeout(resolve, 100);
-    });
+    const deferred = Promise.withResolvers();
 
-    const resultPromise = withAbort(deferred, controller.signal);
+    const resultPromise = withAbort(deferred.promise, controller.signal);
     controller.abort();
 
     await expect(resultPromise).rejects.toThrow(AbortError);
