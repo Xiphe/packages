@@ -84,12 +84,6 @@ export default function createThrottle(windowMs: number = 0) {
 
       return d.promise;
     },
-    /**
-     * @deprecated Use `clear()` instead
-     */
-    reset() {
-      this.clear();
-    },
     clear() {
       jobs.forEach(([d]) => d.reject(THROTTLE_DROPPED));
       last = -Infinity;
