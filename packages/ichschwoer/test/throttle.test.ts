@@ -4,7 +4,6 @@ import createThrottle, {
   isDropped,
   THROTTLE_DROPPED,
 } from "../src/throttle.js";
-import Deferred from "../src/deferred.js";
 
 describe("Throttle", () => {
   beforeEach(() => {
@@ -37,7 +36,7 @@ describe("Throttle", () => {
     });
 
     // Third job on queue, replaces second job
-    const threeD = new Deferred<void>();
+    const threeD = Promise.withResolvers<void>();
     throttle.push(() => {
       check.push("Three");
       return threeD.promise;
@@ -114,7 +113,7 @@ describe("Throttle", () => {
     expect(throttle.trailing).toBe(true);
 
     // hard-resetting the throttle
-    throttle.reset();
+    throttle.clear();
 
     // all jobs have been dropped
     await expect(eight).rejects.toEqual(THROTTLE_DROPPED);

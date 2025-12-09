@@ -1,5 +1,4 @@
 import allFiltered from "./all-filtered.js";
-import Deferred from "./deferred.js";
 import type { Job, JobHandler } from "./JobTypes.js";
 
 export const THROTTLE_DROPPED = Symbol("THROTTLE_DROPPED");
@@ -12,7 +11,7 @@ export default function createThrottle(windowMs: number = 0) {
   let last = -Infinity;
   let closed = false;
   const onEmpty: (() => void)[] = [];
-  const jobs: [Deferred<any>, Job<any>][] = [];
+  const jobs: [PromiseWithResolvers<any>, Job<any>][] = [];
 
   const trigger = () => {
     if (jobs.length > 2) {
@@ -78,7 +77,7 @@ export default function createThrottle(windowMs: number = 0) {
         throw new Error("Throttle is closed");
       }
 
-      const d = new Deferred<T>();
+      const d = Promise.withResolvers<T>();
       jobs.push([d, job]);
       trigger();
 

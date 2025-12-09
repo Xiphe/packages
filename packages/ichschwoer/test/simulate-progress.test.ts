@@ -3,7 +3,6 @@ import simulateProgress, {
   towards,
   endless,
 } from "../src/simulate-progress.js";
-import Deferred from "../src/deferred.js";
 
 describe("simulateProgress", () => {
   beforeEach(() => {
@@ -15,7 +14,7 @@ describe("simulateProgress", () => {
   });
 
   it("calls onProgress with default options", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(deferred.promise, (progress) =>
@@ -53,7 +52,7 @@ describe("simulateProgress", () => {
   });
 
   it("calls onProgress with custom options", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(
@@ -79,7 +78,7 @@ describe("simulateProgress", () => {
   });
 
   it("handles promise rejection and still calls onProgress(1)", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(deferred.promise, (progress) =>
@@ -99,7 +98,7 @@ describe("simulateProgress", () => {
   });
 
   it("returns the resolved value", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(deferred.promise, (progress) =>
@@ -114,7 +113,7 @@ describe("simulateProgress", () => {
   });
 
   it("handles edge case when expectedDurationMs < intervalMs", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(
@@ -136,7 +135,7 @@ describe("simulateProgress", () => {
   });
 
   it("handles edge case when expectedDurationMs equals intervalMs", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(
@@ -158,7 +157,7 @@ describe("simulateProgress", () => {
   });
 
   it("caps progress at 1 even if multiple intervals pass", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(
@@ -188,7 +187,7 @@ describe("simulateProgress", () => {
   });
 
   it("clears interval when promise resolves", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(deferred.promise, (progress) =>
@@ -209,7 +208,7 @@ describe("simulateProgress", () => {
   });
 
   it("clears interval when promise rejects", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(deferred.promise, (progress) =>
@@ -266,7 +265,7 @@ describe("simulateProgress", () => {
   });
 
   it("handles zero expectedDurationMs", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(
@@ -288,7 +287,7 @@ describe("simulateProgress", () => {
   });
 
   it("passes both capped and uncapped progress to callback", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: Array<[number, number]> = [];
 
     const promise = simulateProgress(deferred.promise, (progress, uncapped) =>
@@ -322,7 +321,7 @@ describe("simulateProgress", () => {
   });
 
   it("works with towards helper to scale progress", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(
@@ -350,7 +349,7 @@ describe("simulateProgress", () => {
   });
 
   it("works with endless helper", async () => {
-    const deferred = new Deferred<string>();
+    const deferred = Promise.withResolvers<string>();
     const progressCalls: number[] = [];
 
     const promise = simulateProgress(

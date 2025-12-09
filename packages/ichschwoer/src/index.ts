@@ -1,7 +1,6 @@
 export type { Job, JobHandler } from "./JobTypes.js";
 
 export { default as createBatchResolve } from "./batch-resolve.js";
-export { default as Deferred } from "./deferred.js";
 export { default as createQueue } from "./queue.js";
 export { default as createRateLimit } from "./rate-limit.js";
 export { default as createScatter } from "./scatter.js";

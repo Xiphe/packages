@@ -1,12 +1,11 @@
 import { describe, it, expect } from "vitest";
 import createQueue from "../src/queue.js";
-import Deferred from "../src/deferred.js";
 
 describe("Queue", () => {
   it("executes only set number of jobs parallel", async () => {
     const singleLine = createQueue(1);
-    const d1 = new Deferred();
-    const d2 = new Deferred();
+    const d1 = Promise.withResolvers();
+    const d2 = Promise.withResolvers();
 
     const check: string[] = [];
 
@@ -48,7 +47,7 @@ describe("Queue", () => {
 
   it("can be cleared", async () => {
     const singleLine = createQueue(1);
-    const d1 = new Deferred();
+    const d1 = Promise.withResolvers();
 
     const check: string[] = [];
 
@@ -72,9 +71,9 @@ describe("Queue", () => {
 
   it("runs jobs in parallel", async () => {
     const singleLine = createQueue(2);
-    const d1 = new Deferred();
-    const d2 = new Deferred();
-    const d3 = new Deferred();
+    const d1 = Promise.withResolvers();
+    const d2 = Promise.withResolvers();
+    const d3 = Promise.withResolvers();
 
     const check: string[] = [];
 
@@ -123,7 +122,7 @@ describe("Queue", () => {
 
   it("can be drained", async () => {
     const singleLine = createQueue(1);
-    const d1 = new Deferred<void>();
+    const d1 = Promise.withResolvers<void>();
 
     singleLine.push(() => d1.promise);
     singleLine.push(() => d1.promise);

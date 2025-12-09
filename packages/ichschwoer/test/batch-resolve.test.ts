@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { createBatchResolve } from "../src/index.js";
-import Deferred from "../src/deferred.js";
 
 describe("batchResolve", () => {
   beforeEach(() => {
@@ -12,7 +11,7 @@ describe("batchResolve", () => {
 
   it("resolves all jobs together", async () => {
     const batch = createBatchResolve(100);
-    const d1 = new Deferred();
+    const d1 = Promise.withResolvers();
 
     const checkResolve: string[] = [];
 
@@ -106,7 +105,7 @@ describe("batchResolve", () => {
     const cancelOnEmpty = batch.onEmpty(() => checkResolve.push("Never"));
     cancelOnEmpty();
 
-    const d = new Deferred<void>();
+    const d = Promise.withResolvers<void>();
     batch.push(() => d.promise).then(() => checkResolve.push("One"));
 
     expect(checkResolve).toEqual([]);

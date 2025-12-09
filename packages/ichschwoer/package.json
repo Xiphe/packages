@@ -14,10 +14,6 @@
       "types": "./dist/src/batch-resolve.d.ts",
       "import": "./dist/src/batch-resolve.js"
     },
-    "./deferred": {
-      "types": "./dist/src/deferred.d.ts",
-      "import": "./dist/src/deferred.js"
-    },
     "./queue": {
       "types": "./dist/src/queue.d.ts",
       "import": "./dist/src/queue.js"
