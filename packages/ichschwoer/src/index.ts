@@ -10,6 +10,9 @@ export {
   default as simulateProgress,
   type SimulateProgressOptions,
   type ProgressHandler,
+  endless as mapProgressToEndless,
+  towards as mapProgressToTowards,
+  dampenedHyperbolic,
 } from "./simulate-progress.js";
 export {
   default as withAbort,
