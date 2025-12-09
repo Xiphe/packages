@@ -37,6 +37,10 @@
     "./simulate-progress": {
       "types": "./dist/src/simulate-progress.d.ts",
       "import": "./dist/src/simulate-progress.js"
+    },
+    "./with-abort": {
+      "types": "./dist/src/with-abort.d.ts",
+      "import": "./dist/src/with-abort.js"
     }
   },
   "keywords": [
