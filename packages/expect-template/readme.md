@@ -46,24 +46,11 @@ expect.extend(matchers);
 ## Usage
 
 ```ts
-
-
-it("compares colors", () => {
-  // Same color in same color space
-  expect("rgb(255, 0, 255)").toBeColor("fuchsia");
-
-  // Same color in different color space
-  expect("fuchsia").toEqualColor("hsl(300, 100%, 50%)");
-
-  expect({ borderColor: "rgb(255, 0, 255)" }).toEqual({
-    borderColor: expect.toBeColor("fuchsia"),
-  });
-});
+import { sentence } from "expect-template/lib";
 
 it("compares css templates", () => {
-  expect("1px solid rgb(0, 0, 0)").toEqualTemplate(
-    css`1px solid ${expect.toBeColor("black")}`,
+  expect("one two three").toMatchTemplate(
+    sentence`one two ${expect.stringMatching(/three/i)}`,
   );
 });
 ```
-
