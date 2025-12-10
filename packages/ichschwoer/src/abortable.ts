@@ -9,15 +9,15 @@ export function isAbortError(error: unknown): error is AbortError {
   return error instanceof Error && error.name === "AbortError";
 }
 
-export default async function withAbort(
-  promise: Promise<any>,
+export default async function abortable<T>(
+  promise: Promise<T>,
   abort: AbortSignal,
 ) {
   const cleanup = new AbortController();
   try {
     return await Promise.race([
       promise,
-      new Promise((_, reject) => {
+      new Promise<never>((_, reject) => {
         abort.addEventListener(
           "abort",
           () => {

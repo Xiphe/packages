@@ -19,8 +19,9 @@ export {
   dampenedHyperbolic,
 } from "./simulate-progress.js";
 export {
-  default as withAbort,
+  default as abortable,
+  /** @deprecated Use `abortable` instead */ default as withAbort,
   AbortError,
   isAbortError,
-} from "./with-abort.js";
+} from "./abortable.js";
 export { default as allFiltered } from "./all-filtered.js";

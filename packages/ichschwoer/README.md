@@ -124,19 +124,19 @@ const data = await simulateProgress(
 );
 ```
 
-### `withAbort`
+### `abortable`
 
 Adds abort signal support to a promise.
 
 ```ts
-import { withAbort } from "ichschwoer";
+import { abortable } from "ichschwoer";
 
 const controller = new AbortController();
 const somePromise = new Promise((resolve) => setTimeout(resolve, 1000));
 on("navigate-away", () => controller.abort());
 
 try {
-  const data = await withAbort(somePromise, controller.signal);
+  const data = await abortable(somePromise, controller.signal);
 } catch (error) {
   if (error instanceof Error && error.name === "AbortError") {
     console.log("Request was cancelled");

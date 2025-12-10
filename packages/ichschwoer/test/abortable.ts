@@ -1,12 +1,12 @@
 import { describe, it, expect, vi } from "vitest";
-import withAbort, { AbortError, isAbortError } from "../src/with-abort.js";
+import abortable, { AbortError, isAbortError } from "../src/abortable.js";
 
-describe("withAbort", () => {
+describe("abortable", () => {
   it("resolves when promise resolves before abort", async () => {
     const controller = new AbortController();
     const promise = Promise.resolve("success");
 
-    const result = await withAbort(promise, controller.signal);
+    const result = await abortable(promise, controller.signal);
     expect(result).toBe("success");
   });
 
@@ -14,7 +14,7 @@ describe("withAbort", () => {
     const controller = new AbortController();
     const deferred = Promise.withResolvers();
 
-    const resultPromise = withAbort(deferred.promise, controller.signal);
+    const resultPromise = abortable(deferred.promise, controller.signal);
     controller.abort();
 
     await expect(resultPromise).rejects.toThrow(AbortError);
@@ -26,7 +26,7 @@ describe("withAbort", () => {
     const originalError = new Error("Original error");
     const promise = Promise.reject(originalError);
 
-    await expect(withAbort(promise, controller.signal)).rejects.toThrow(
+    await expect(abortable(promise, controller.signal)).rejects.toThrow(
       originalError,
     );
   });
@@ -35,7 +35,7 @@ describe("withAbort", () => {
     const controller = new AbortController();
     const addSpy = vi.spyOn(controller.signal, "addEventListener");
 
-    await withAbort(Promise.resolve("success"), controller.signal);
+    await abortable(Promise.resolve("success"), controller.signal);
 
     // The cleanup signal passed to addEventListener should be aborted
     const options = addSpy.mock.calls[0]?.[2] as { signal: AbortSignal };
