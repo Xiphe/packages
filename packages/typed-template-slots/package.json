@@ -2,7 +2,7 @@
   "name": "typed-template-slots",
   "version": "0.0.0-development",
   "type": "module",
-  "description": "make assertions on normalized color",
+  "description": "tiny, type-safe template literals with named slots",
   "main": "dist/src/index.js",
   "sideEffects": false,
   "exports": {
