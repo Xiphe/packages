@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - '**'
+      - "**"
   pull_request:
     branches:
-      - '**'
+      - "**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -34,7 +34,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
 
       - name: 📥 Install dependencies
         run: pnpm install
@@ -46,8 +47,6 @@ jobs:
         run: |
           set -e  # Exit immediately if a command exits with a non-zero status.
 
-          pnpm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-          pnpm whoami
           pnpm -r --workspace-concurrency=1 exec -- bash -c 'echo;echo -------; pwd; echo  -------; echo && npx --no-install semantic-release'
 
           # Publish packages if there are changes
@@ -55,4 +54,3 @@ jobs:
           pnpm -r --no-git-checks --filter="[HEAD]" publish --access public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
