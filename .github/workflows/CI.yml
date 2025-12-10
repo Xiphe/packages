@@ -48,10 +48,12 @@ jobs:
         run: |
           set -e  # Exit immediately if a command exits with a non-zero status.
 
-          pnpm -r --workspace-concurrency=1 exec -- bash -c 'echo;echo -------; pwd; echo  -------; echo && npx --no-install semantic-release'
+          npm -v
 
-          # Publish packages if there are changes
-          echo;echo -------; echo publishing; echo  -------; echo;
-          pnpm -r --no-git-checks --filter="[HEAD]" publish --access public
+          # pnpm -r --workspace-concurrency=1 exec -- bash -c 'echo;echo -------; pwd; echo  -------; echo && npx --no-install semantic-release'
+
+          # # Publish packages if there are changes
+          # echo;echo -------; echo publishing; echo  -------; echo;
+          # pnpm -r --no-git-checks --filter="[HEAD]" publish --access public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
