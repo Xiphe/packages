@@ -21,8 +21,6 @@ export interface BddApi<Context = any> {
   Then: StepDefiner<Context, any[]>;
 }
 
-// Tagged template support
-
 // Map a tuple of schemas to a tuple of inferred output types (preserves order)
 type ArgsFromSchemas<S extends readonly StandardJSONSchemaV1[]> = {
   [K in keyof S]: StandardJSONSchemaV1.InferOutput<S[K]>;
@@ -116,32 +114,11 @@ function schemaToRegex(schema: StandardJSONSchemaV1): string {
 }
 
 /**
- * Parses a raw string value according to schema type
- */
-function parseValue(rawValue: string, schema: StandardJSONSchemaV1): any {
-  const standard = schema["~standard"] as any;
-  const jsonSchema = standard.jsonSchema.input();
-
-  // For strings, remove quotes if present
-  if ("type" in jsonSchema && jsonSchema.type === "string") {
-    return rawValue.replace(/^["']|["']$/g, "");
-  }
-
-  // For numbers, parse to number
-  if ("type" in jsonSchema && jsonSchema.type === "number") {
-    return parseFloat(rawValue);
-  }
-
-  // For literals and unions, return as-is
-  return rawValue;
-}
-
-/**
  * Creates a typed BDD API wrapper
  */
 export function createTypedBdd<API extends BddApi>(
   base: API,
-): API & TypedBddApi<API> {
+): TypedBddApi<API> {
   function createStepDefiner<Definer extends StepDefiner>(
     baseDefiner: Definer,
   ) {
@@ -202,7 +179,6 @@ export function createTypedBdd<API extends BddApi>(
   }
 
   return {
-    ...base,
     Given: createStepDefiner(base.Given),
     When: createStepDefiner(base.When),
     Then: createStepDefiner(base.Then),
