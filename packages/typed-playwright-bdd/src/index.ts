@@ -118,7 +118,7 @@ function schemaToRegex(schema: StandardJSONSchemaV1): string {
  */
 export function createTypedBdd<API extends BddApi>(
   base: API,
-): TypedBddApi<API> {
+): TypedBddApi<API> & Omit<API, "Given" | "When" | "Then"> {
   function createStepDefiner<Definer extends StepDefiner>(
     baseDefiner: Definer,
   ) {
@@ -179,6 +179,7 @@ export function createTypedBdd<API extends BddApi>(
   }
 
   return {
+    ...base,
     Given: createStepDefiner(base.Given),
     When: createStepDefiner(base.When),
     Then: createStepDefiner(base.Then),
