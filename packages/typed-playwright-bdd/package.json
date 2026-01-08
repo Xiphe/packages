@@ -1,0 +1,41 @@
+{
+  "name": "typed-playwright-bdd",
+  "version": "0.0.0-development",
+  "type": "module",
+  "description": "type-safe wrapper for playwright-bdd",
+  "main": "dist/index.js",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest",
+    "prepare": "rm -rf dist && npm run build",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Xiphe/packages.git"
+  },
+  "author": "Hannes Diercks <node@xiphe.net> (https://xiphe.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Xiphe/packages/issues"
+  },
+  "release": {
+    "extends": [
+      "semantic-release-monorepo",
+      "../../release.config.js"
+    ]
+  },
+  "homepage": "https://github.com/Xiphe/packages/tree/main/packages/typed-playwright-bdd#readme",
+  "devDependencies": {
+    "zod": "^4.3.5"
+  },
+  "dependencies": {
+    "@standard-schema/spec": "^1.1.0"
+  }
+}
