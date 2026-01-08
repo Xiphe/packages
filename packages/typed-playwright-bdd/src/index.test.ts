@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, Mock } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { z } from "zod";
-import { BddApi, createTypedBdd, StepDefiner } from "./index.js";
+import { createTypedBdd, StepDefiner } from "./index.js";
 
 function createMockBDD<Context = any>() {
   const Given = vi.fn();
@@ -55,6 +55,20 @@ describe("typed-playwright-bdd", () => {
       expect(pattern).toBeInstanceOf(RegExp);
       expect(pattern.source).toBe("^I fill in [\"']([^\"']+)[\"']$");
       expect("I fill in 'hello'").toMatch(pattern);
+    });
+
+    it("stringifies to wrapped handler", () => {
+      const baseBdd = createMockBDD<{ page: string }>();
+      const typed = createTypedBdd(baseBdd);
+      typed.When`I fill in ${z.string()}`(
+        async ({ page }: { page: string }, Yhoooo: string) => {},
+      );
+
+      expect(baseBdd.mocks.When.mock.calls[0][1].toString())
+        .toMatchInlineSnapshot(`
+          "async ({ page }, Yhoooo) => {
+                  }"
+        `);
     });
 
     it("supports transformations", () => {

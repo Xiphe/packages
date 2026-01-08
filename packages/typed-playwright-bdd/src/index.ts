@@ -167,6 +167,11 @@ export function createTypedBdd<API extends BddApi>(
             return handler(ctx, ...validatedArgs);
           };
 
+          /* Playwright (bdd) does magic dependency injection with
+             fixtures, using the context param of the handler.
+             so we need to make our wrapper transparent */
+          wrappedHandler.toString = () => handler.toString();
+
           baseDefiner(regex, wrappedHandler);
         };
       }
