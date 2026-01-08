@@ -38,17 +38,17 @@ import { z } from "zod";
 const { Given, When, Then } = createTypedBdd(createBdd());
 
 When`I fill in my email ${z.email()}`(async ({ page }, email) => {
-  page.getByLabel("Email").fill(email);
+  await page.getByLabel("Email").fill(email);
 });
 
 When`I fill ${z.string()} with ${z.union([z.number(), z.string()])}`(
   async ({ page }, field, value) => {
-    page.getByLabel(new RegExp(field, "i")).fill(value);
+    await page.getByLabel(new RegExp(field, "i")).fill(value);
   },
 );
 
 Then`I should see ${z.number()} items`(async ({ page }, count) => {
-  expect(page.locator(".item").count()).toBe(count);
+  await expect(page.locator(".item").count()).toBe(count);
 });
 ```
 
@@ -58,9 +58,11 @@ Use literals for exact matches:
 
 ```typescript
 // "When I click the submit button"
-When`I click the ${z.literal("submit")} button`(({ page }, buttonType) => {
-  await page.click(`button[type="${buttonType}"]`);
-});
+When`I click the ${z.literal("submit")} button`(
+  async ({ page }, buttonType) => {
+    await page.click(`button[type="${buttonType}"]`);
+  },
+);
 ```
 
 ### Union of Literals
@@ -76,7 +78,7 @@ const direction = z.union([
 ]);
 
 // "When I swipe left"
-When`I swipe ${direction}`(({ page }, dir) => {
+When`I swipe ${direction}`(async ({ page }, dir) => {
   await page.swipe(dir);
 });
 ```
@@ -106,12 +108,12 @@ The original string-based API remains available:
 
 ```typescript
 // Traditional approach still works
-When("I fill in {string}", ({ page }, value) => {
+When("I fill in {string}", (async { page }, value) => {
   await page.fill("input", value);
 });
 
 // Mix and match as needed
-When`I type ${z.string()}`(({ page }, text) => {
+When`I type ${z.string()}`(async({ page }, text) => {
   await page.keyboard.type(text);
 });
 ```
